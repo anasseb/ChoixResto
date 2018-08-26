@@ -2,12 +2,21 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ChoixResto.Models;
 using System.Collections.Generic;
+using System.Data.Entity;
 
 namespace ChoixResto.Tests
 {
     [TestClass]
     public class DalTests
     {
+        [TestInitialize]
+        public void Init_AvantChaqueTest()
+        {
+            IDatabaseInitializer<BddContext> init = new DropCreateDatabaseAlways<BddContext>();
+            Database.SetInitializer(init);
+            init.InitializeDatabase(new BddContext());
+        }
+
         [TestMethod]
         public void CreerRestaurant_AvecUnNouveauRestaurant_ObtientTousLesRestaurantsRenvoitBienLeRestaurant()
         {
